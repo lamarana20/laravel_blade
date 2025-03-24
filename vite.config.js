@@ -8,7 +8,7 @@ export default defineConfig({
             input: ['resources/css/app.css', 'resources/js/app.js'],
 
             refresh: true,
-            refresh: ['vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php'],
+         
         }),
         tailwindcss(),
     ],
