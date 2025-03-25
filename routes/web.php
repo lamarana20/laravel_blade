@@ -33,7 +33,7 @@ Route::middleware(['auth'])->group(function () {
     //Logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     //dashboard
-    Route::get('dashboard', [DashboardController::class, 'index'])->middleware('verified')->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // email verification notice
     Route::get('/email/verify', [AuthController::class, 'verifyNotice'])->name('verification.notice');
 
