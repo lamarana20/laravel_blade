@@ -20,7 +20,7 @@
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
             @foreach ($posts as $post)
                <x-postCard :post="$post">
-                    {{-- Update Button --}}
+                {{-- Update Button --}}
                     <a href="{{ route('posts.edit', $post) }}"
                         class="text-white hover:text-white bg-green-500 py-1 px-2 rounded-md text-xs">
                         Update

@@ -79,13 +79,13 @@ class PostController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
-    {
-        
-        return view('posts.show', ['post' => $post]);
-
-    }
-
+    public function show($id)
+{
+    // Récupérer le post avec ses commentaires
+    $post = Post::findOrFail($id);
+    $comments = $post->comments()->latest()->get(); 
+    return view('posts.show', compact('post', 'comments'));
+}
     /**
      * Show the form for editing the specified resource.
      */
@@ -146,7 +146,25 @@ class PostController extends Controller implements HasMiddleware
         return back()->with('delete', 'Post deleted successfully');
     }
   
- 
+    public function jaimerPost(Post $post)
+    {
+        $userId = auth()->id();
+    
+        $jaime = $post->jaimes()->where('user_id', $userId)->first();
+    
+        if ($jaime) {
+            // Si déjà aimé → on retire le j’aime
+            $jaime->delete();
+            return back()->with('message', 'J\'aime retiré avec succès');
+        } else {
+            // Sinon on ajoute le j’aime
+            $post->jaimes()->create([
+                'user_id' => $userId,
+            ]);
+            return back()->with('message', 'Post aimé avec succès');
+        }
+    }
+    
 
   
 }

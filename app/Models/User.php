@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+
 class User extends Authenticatable implements MustVerifyEmail,CanResetPassword
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -54,4 +55,14 @@ class User extends Authenticatable implements MustVerifyEmail,CanResetPassword
     {
         return $this->hasMany(Post::class);
     }
+    public function likes()
+{
+    return $this->hasMany(Like::class);
+}
+public function jaimes()
+{
+    return $this->belongsToMany(Post::class, 'likes', 'user_id', 'post_id');
+}
+
+
 }

@@ -75,6 +75,7 @@
         {{ $slot }}
     </main>
 
+
     <script>
         document.addEventListener("alpine:init", () => {
             Alpine.data("formSubmit", () => ({

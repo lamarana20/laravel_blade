@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\CommentController;
 
 
 Route::get('/', [PostController::class, 'index']);
@@ -28,6 +29,13 @@ Route::middleware(['guest'])->group(function () {
     
     
 });
+Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
+Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
+Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit')->middleware('auth');
+Route::post('/comments/{comment}/like', [CommentController::class, 'like'])->name('comments.like');
+
+
 
 Route::middleware(['auth'])->group(function () {
     //Logout
@@ -46,5 +54,6 @@ Route::middleware(['auth'])->group(function () {
 
 Route::resource('posts', PostController::class);
 Route::get('/{user}/posts', [DashboardController::class, 'userPosts'])->name('posts.user');
+Route::post('/posts/{post}/jaimer', [PostController::class, 'jaimerPost'])->name('posts.jaimer');
 
 
