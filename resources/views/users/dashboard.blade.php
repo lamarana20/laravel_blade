@@ -11,7 +11,7 @@
     </p>
 
     {{-- Create Post Section with Alpine.js --}}
-   <x-formePost/>
+    <x-formePost/>
 
     {{-- Last Posts --}}
     <h2 class="font-bold text-lg mt-6 mb-4">Your Last Posts</h2>
@@ -20,18 +20,18 @@
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
             @foreach ($posts as $post)
                <x-postCard :post="$post">
-                {{-- Update Button --}}
+                    {{-- Update Button --}}
                     <a href="{{ route('posts.edit', $post) }}"
                         class="text-white hover:text-white bg-green-500 py-1 px-2 rounded-md text-xs">
                         Update
                     </a>
-
+                  
                     {{-- Delete Button with SweetAlert --}}
                     <form action="{{ route('posts.destroy', $post) }}" method="POST" id="delete-form-{{$post->id}}">
                         @csrf
                         @method('DELETE')
 
-                        <button type="button" class="text-white py-1 px-2 rounded-md bg-red-500 text-xs"
+                        <button type="button" class="text-white py-1 px-1 rounded-md bg-red-500 text-xs"
                             onclick="confirmDelete({{ $post->id }})">
                             Delete
                         </button>
@@ -77,3 +77,5 @@
         }
     </script>
 </x-layout>
+
+

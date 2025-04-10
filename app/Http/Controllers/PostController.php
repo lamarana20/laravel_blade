@@ -150,20 +150,30 @@ class PostController extends Controller implements HasMiddleware
     {
         $userId = auth()->id();
     
+        // Vérifier si l'utilisateur a déjà aimé ce post
         $jaime = $post->jaimes()->where('user_id', $userId)->first();
     
         if ($jaime) {
             // Si déjà aimé → on retire le j’aime
             $jaime->delete();
-            return back()->with('message', 'J\'aime retiré avec succès');
+            return response()->json([
+                'message' => 'J\'aime retiré avec succès',
+                'likes_count' => $post->jaimes()->count(),
+                'liked' => false
+            ]);
         } else {
             // Sinon on ajoute le j’aime
             $post->jaimes()->create([
                 'user_id' => $userId,
             ]);
-            return back()->with('message', 'Post aimé avec succès');
+            return response()->json([
+                'message' => 'Post aimé avec succès',
+                'likes_count' => $post->jaimes()->count(),
+                'liked' => true
+            ]);
         }
     }
+    
     
 
   
