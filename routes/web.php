@@ -29,12 +29,13 @@ Route::middleware(['guest'])->group(function () {
     
     
 });
-Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
+Route::middleware(['auth'])->group(function () {
+Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
-Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit')->middleware('auth');
+Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit');
 Route::post('/comments/{comment}/like', [CommentController::class, 'like'])->name('comments.like');
-
+});
 
 
 Route::middleware(['auth'])->group(function () {
@@ -44,6 +45,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // email verification notice
     Route::get('/email/verify', [AuthController::class, 'verifyNotice'])->name('verification.notice');
+//
+Route::post('/posts/{post}/jaimer', [PostController::class, 'jaimerPost'])->name('posts.jaimer');
+
 
     //email  verification handle
     Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->middleware('signed')->name('verification.verify');
@@ -54,6 +58,4 @@ Route::middleware(['auth'])->group(function () {
 
 Route::resource('posts', PostController::class);
 Route::get('/{user}/posts', [DashboardController::class, 'userPosts'])->name('posts.user');
-Route::post('/posts/{post}/jaimer', [PostController::class, 'jaimerPost'])->name('posts.jaimer');
-
 
